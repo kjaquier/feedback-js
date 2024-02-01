@@ -14,6 +14,7 @@ export default class Feedback {
 		const defaultOptions = {
 			id: 'feedback',
 			endpoint: '',
+			httpHeaders: {},
 			events: false,
 			emailField: false,
 			forceShowButton: false,
@@ -240,6 +241,9 @@ export default class Feedback {
 		const request = new XMLHttpRequest()
 		request.open('POST', this.options.endpoint)
 		request.setRequestHeader('Content-type', 'application/json')
+		for (const [header, value] of Object.entries(this.options.httpHeaders)) {
+			request.setRequestHeader(header, value);
+		}
 		request.send(JSON.stringify(data))
 		request.onreadystatechange = () => {
 			if (request.readyState === 4) {
